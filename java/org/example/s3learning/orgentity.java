@@ -10,8 +10,12 @@ public class orgentity {
     @GeneratedValue
     private int id;
     private String name;
+private Long parentId;
 
-
+public Long  getParentId() {
+	return parentId;
+}
+public void setParentId(Long parentId) {}
 public String getName(){
     return name;
 }
