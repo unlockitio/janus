@@ -8,6 +8,6 @@ import java.util.Map;
 
 public interface storageinterface {
     String upload(MultipartFile file,String bucketname) throws IOException;
-    void delete(String cid);
-    Map list();
+    void delete(String cid,String bucketname);
+    Map list(String bucketname);
 }
