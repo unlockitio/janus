@@ -13,12 +13,14 @@ public class storageservice {
     private final orgconfig orgconfig;
     private final s3service s3service;
     private final pinataservice pinataservice;
+    private final orgsrep orgsrep;
 
 
-    public storageservice(List<storageinterface> storage, orgconfig orgconfig, s3service s3service, pinataservice pinataservice) {
+    public storageservice(orgsrep orgsrep,List<storageinterface> storage, orgconfig orgconfig, s3service s3service, pinataservice pinataservice) {
         this.orgconfig = orgconfig;
         this.s3service = s3service;
         this.pinataservice = pinataservice;
+        this.orgsrep = orgsrep;
     }
 
     public List<String> upload(Long orgId,MultipartFile file) throws IOException {
@@ -34,6 +36,20 @@ public class storageservice {
                 results.add(pinataservice.upload(file,null));
             }
 
+        }
+        List<orgentity>children=orgsrep.findByParentId(orgId);
+        for(orgentity childorg : children){
+            List<orgsconfigentity>childproviders=orgconfig.findByOrgId((long) childorg.getId());
+            for (orgsconfigentity childservice : childproviders){
+                String provider=childservice.getServicename();
+                if (provider.equals("s3")){
+                    results.add("child propagation s3"+s3service.upload(file,childservice.getBucketname()));
+                }
+                if(provider.equals("ipfs")){
+                    results.add("child propagation ipfs"+pinataservice.upload(file,null));
+                }
+
+            }
         }
         return results;
     }
