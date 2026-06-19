@@ -21,13 +21,13 @@ import java.util.stream.Collectors;
 public class s3service implements storageinterface{
     private final S3Presigner  s3Presigner;
     private final S3Client S3Client;
-    private final String bucketname;
+  
 
-public s3service(S3Client S3Client,S3Presigner s3Presigner, String bucketname){
+public s3service(S3Client S3Client,S3Presigner s3Presigner){
 
     this.S3Client=S3Client;
     this.s3Presigner=s3Presigner;
-    this.bucketname=bucketname;
+
 }
     public String upload(MultipartFile file, String bucketname) throws IOException {
  S3Client.putObject(PutObjectRequest.builder().bucket(bucketname).key(file.getOriginalFilename()).build(), RequestBody.fromBytes(file.getBytes()));
