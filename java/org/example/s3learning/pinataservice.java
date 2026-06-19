@@ -45,6 +45,6 @@ webClient.delete().uri("/pinning/unpin/"+cid).retrieve().bodyToMono(Void.class).
 
     }
 
-public Map list(){
+public Map list(String bucketname){
     return webClient.get().uri("/data/pinList").retrieve().bodyToMono(HashMap.class).block();
 }}
