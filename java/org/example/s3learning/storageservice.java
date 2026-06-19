@@ -72,7 +72,7 @@ public class storageservice {
                 list.add(s3service.list(services.getBucketname()));
             }
             if(provider.equals("ipfs")){
-                list.add(pinataservice.list());
+                list.add(pinataservice.list(null));
             }
 
         }
