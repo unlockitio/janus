@@ -1,7 +1,6 @@
-package org.example.s3learning;
+package org.example.s3learning.storage;
 
 import org.springframework.web.multipart.MultipartFile;
-import software.amazon.awssdk.services.s3.S3Client;
 
 import java.io.IOException;
 import java.util.Map;

@@ -1,5 +1,12 @@
-package org.example.s3learning;
+package org.example.s3learning.storage;
 
+import org.example.s3learning.kubo.kuboservice;
+import org.example.s3learning.orgs.orgconfig;
+import org.example.s3learning.orgs.orgentity;
+import org.example.s3learning.orgs.orgsconfigentity;
+import org.example.s3learning.orgs.orgsrep;
+import org.example.s3learning.pinata.pinataservice;
+import org.example.s3learning.s3.s3service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

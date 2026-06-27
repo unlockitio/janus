@@ -1,20 +1,19 @@
-package org.example.s3learning;
+package org.example.s3learning.pinata;
 
+import org.example.s3learning.storage.storageinterface;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.core.io.ByteArrayResource;
+
 import java.util.HashMap;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 @Service

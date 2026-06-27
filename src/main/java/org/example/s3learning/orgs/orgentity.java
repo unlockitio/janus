@@ -1,4 +1,4 @@
-package org.example.s3learning;
+package org.example.s3learning.orgs;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

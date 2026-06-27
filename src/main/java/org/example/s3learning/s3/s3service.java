@@ -1,5 +1,6 @@
-package org.example.s3learning;
+package org.example.s3learning.s3;
 
+import org.example.s3learning.storage.storageinterface;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -10,15 +11,12 @@ import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignReques
 
 
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
-public class s3service implements storageinterface{
+public class s3service implements storageinterface {
     private final S3Presigner  s3Presigner;
     private final S3Client S3Client;
 

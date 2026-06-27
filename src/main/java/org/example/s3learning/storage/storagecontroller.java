@@ -1,11 +1,10 @@
-package org.example.s3learning;
+package org.example.s3learning.storage;
 
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 

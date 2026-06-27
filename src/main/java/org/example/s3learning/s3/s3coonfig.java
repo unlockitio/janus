@@ -1,6 +1,6 @@
 
 
-package org.example.s3learning;
+package org.example.s3learning.s3;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package org.example.s3learning;
+package org.example.s3learning.orgs;
 
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ public class orgservice {
     public List<orgentity> listorgs(){
         return orgsrep.findAll();
     }
-    public orgsconfigentity configcreate(Long id,orgsconfigentity orgsconfigentity){
+    public orgsconfigentity configcreate(Long id, orgsconfigentity orgsconfigentity){
 orgsconfigentity.setorgId(id);
         return orgconfig.save(orgsconfigentity);
     }

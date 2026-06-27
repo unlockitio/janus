@@ -1,5 +1,6 @@
-package org.example.s3learning;
+package org.example.s3learning.kubo;
 
+import org.example.s3learning.storage.storageinterface;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 @Service
-public class kuboservice implements storageinterface{
+public class kuboservice implements storageinterface {
    private final WebClient kubowebclient;
     public kuboservice(WebClient kubowebclient) {
         this.kubowebclient = kubowebclient;

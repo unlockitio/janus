@@ -1,4 +1,4 @@
-package org.example.s3learning;
+package org.example.s3learning.orgs;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +22,7 @@ public class orgcontroller {
         return orgservice.listorgs();
     }
 @PostMapping("/orgs/{orgId}/createconfig")
-    public orgsconfigentity createorgconfig(@PathVariable long orgId,@RequestBody orgsconfigentity orgsconfigentity){
+    public orgsconfigentity createorgconfig(@PathVariable long orgId, @RequestBody orgsconfigentity orgsconfigentity){
 
         return orgservice.configcreate(orgId,orgsconfigentity);
 }
