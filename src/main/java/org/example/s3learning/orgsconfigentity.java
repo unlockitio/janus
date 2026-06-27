@@ -1,0 +1,39 @@
+package org.example.s3learning;
+
+import jakarta.persistence.*;
+
+@Entity
+public class orgsconfigentity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Long orgId;
+    private String servicename;
+    @Column(length = 1000)
+    private String credentials;
+    private String bucketname;
+    public Long getId() {
+        return id;
+
+    }
+    public void setorgId(Long orgId) {
+        this.orgId = orgId;
+    }
+    public void setServicename(String servicename) {
+        this.servicename = servicename;
+    }
+    public String getServicename() {
+        return servicename;
+    }
+    public void setCredentials(String credentials) {
+        this.credentials = credentials;
+    }
+    public String getCredentials() {
+        return credentials;
+    }
+    public String getBucketname() {
+        return bucketname;
+    }
+
+}
