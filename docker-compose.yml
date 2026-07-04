@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8081:8081"
+    depends_on:
+      - kubo
+
+  kubo:
+    image: ipfs/kubo:latest
+    ports:
+      - "4001:4001"
+      - "5001:5001"
+      - "8082:8080"
+    volumes:
+      - kubo_data:/data/ipfs
+
+volumes:
+  kubo_data:
