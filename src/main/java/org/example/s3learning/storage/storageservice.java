@@ -99,4 +99,32 @@ public class storageservice {
         }
         return list;
     }
+    public String getfileurl(String id,String cid, String bucketname) {
+        List<orgsconfigentity> providers = orgconfig.findByOrgId(Long.valueOf(id));
+        for (orgsconfigentity services : providers) {
+            String provider = services.getServicename();
+            if (provider.equals("s3")) {
+                try {
+                    return s3service.getfileurl(null, bucketname);
+                } catch (Exception e) {
+
+
+                }
+            }
+            if (provider.equals("ipfs")) {
+                try {
+                    return pinataservice.getfileurl(cid, null);
+                } catch (Exception e) {
+                }
+            }
+            if (provider.equals("kubo")) {
+                try {
+                    return kuboservice.getfileurl(cid, null);
+                } catch (Exception e) {
+                }
+            }
+
+        }
+        return null;
+    }
 }

@@ -45,8 +45,8 @@ public void delete(String key,String bucketname){
 System.out.println("Deleted: " + key);
 }
 
-public String getfileurl(String key,String bucketname){
-GetObjectRequest request= GetObjectRequest.builder().bucket(bucketname).key(key).build();
+public String getfileurl(String cid,String bucketname){
+GetObjectRequest request= GetObjectRequest.builder().bucket(bucketname).key(cid).build();
     GetObjectPresignRequest presignRequest= GetObjectPresignRequest.builder().signatureDuration(Duration.ofMinutes(15)).getObjectRequest(request).build();
     return s3Presigner.presignGetObject(presignRequest).url().toString();
 }

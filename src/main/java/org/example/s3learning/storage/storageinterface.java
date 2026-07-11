@@ -9,4 +9,5 @@ public interface storageinterface {
     String upload(MultipartFile file,String bucketname) throws IOException;
     void delete(String cid,String bucketname);
     Map list(String bucketname);
+    String getfileurl(String cid, String bucketname);
 }

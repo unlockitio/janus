@@ -36,5 +36,9 @@ public class kuboservice implements storageinterface {
         return kubowebclient.post().uri("/api/v0/pin/ls").retrieve().bodyToMono(HashMap.class).block();
 
     }
+    public String getfileurl(String cid, String bucketname){
+        return "http://kubo:8080/ipfs/" + cid;
+    }
+
 
 }

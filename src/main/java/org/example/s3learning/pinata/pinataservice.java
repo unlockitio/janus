@@ -43,6 +43,9 @@ return webClient.post().uri("/pinning/pinFileToIPFS").contentType(MediaType.MULT
 webClient.delete().uri("/pinning/unpin/"+cid).retrieve().bodyToMono(Void.class).block();
 
     }
+    public String getfileurl(String cid, String bucketname){
+        return "https://gateway.pinata.cloud/ipfs/" + cid;
+    }
 
 public Map list(String bucketname){
     return webClient.get().uri("/data/pinList").retrieve().bodyToMono(HashMap.class).block();
