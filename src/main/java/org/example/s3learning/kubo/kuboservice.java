@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 @Service
-public class kuboservice implements storageinterface {
+public class kuboservice {
    private final WebClient kubowebclient;
     public kuboservice(WebClient kubowebclient) {
         this.kubowebclient = kubowebclient;

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -15,9 +16,10 @@ public class storagecontroller {
         this.storageservice = storageservice;
     }
     @PostMapping("/upload/{Id}")
-    public List<String> upload(@PathVariable Long Id, @RequestParam MultipartFile file) throws IOException {
-        List<String>result =storageservice.upload(Id,file);
-       return result;
+    public void upload(@PathVariable Long Id, @RequestParam MultipartFile file) throws IOException {
+        String path=storageservice.savelocally(file);
+        storageservice.upload(Id,path);
+
     }
     @DeleteMapping("/delete/{orgId}/{id}")
     public String delete(@PathVariable String id, @PathVariable Long orgId)  {

@@ -36,7 +36,7 @@ public class filerecordnentity {
         cid=url;
     }
     public void setstatus(String status){
-        status=status;
+        this.status=status;
     }
     public int getretrynumbers(){
         return retrynumbers;
@@ -47,4 +47,17 @@ public class filerecordnentity {
     public void setLastattemptat(Instant lastattemptat){
         this.lastattemptat=lastattemptat;
     }
+    public void setOrgId(Long orgId){
+        this.orgId=orgId;
+    }
+    public void setservice(String service){
+        this.service = service;
+    }
+    public void setBucketname(String bucketname){
+        this.bucketname = bucketname;
+    }
+    public void setFilename(String filename){
+        this.filename = filename;
+    }
 }
+

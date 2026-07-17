@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class s3service implements storageinterface {
+public class s3service  {
     private final S3Presigner  s3Presigner;
     private final S3Client S3Client;
 
