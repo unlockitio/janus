@@ -1,6 +1,5 @@
 package org.example.s3learning.kubo;
 
-import org.example.s3learning.storage.storageinterface;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;

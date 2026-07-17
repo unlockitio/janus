@@ -1,6 +1,6 @@
 package org.example.s3learning.pinata;
 
-import org.example.s3learning.storage.storageinterface;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @Service
-public class pinataservice implements storageinterface {
+public class pinataservice  {
     private final String jwt;
     private final WebClient webClient;
 

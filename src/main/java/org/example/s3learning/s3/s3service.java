@@ -1,6 +1,4 @@
 package org.example.s3learning.s3;
-
-import org.example.s3learning.storage.storageinterface;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.sync.RequestBody;

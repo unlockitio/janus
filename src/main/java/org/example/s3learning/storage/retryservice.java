@@ -23,7 +23,7 @@ public class retryservice {
     }
     @Scheduled(fixedRate = 300000)
     public void retryfailedget() {
-        List<filerecordnentity>methodtoretry=filerecordrepo.findbystatusAndretrynumbersLessThan("failed",5);
+        List<filerecordnentity>methodtoretry=filerecordrepo.findByStatusAndRetrynumbersLessThan("failed",5);
 for (filerecordnentity retryfiles: methodtoretry) {
 String service=retryfiles.getbackendname();
 String bucketname=retryfiles.getbucketname();

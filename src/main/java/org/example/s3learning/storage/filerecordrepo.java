@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface filerecordrepo extends JpaRepository<filerecordnentity,Long> {
-    List<filerecordnentity>findbystatusAndretrynumbersLessThan(String status,int retrynumbers);
+    List<filerecordnentity>findByStatusAndRetrynumbersLessThan(String status,int retrynumbers);
 }
