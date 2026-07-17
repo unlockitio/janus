@@ -32,5 +32,9 @@ public class storagecontroller {
         return storageservice.getList(orgId);
     }
 
+    @GetMapping("/geturl/{id}")
+    public String getfileurl(@PathVariable  String id,@RequestParam   String cid,@RequestParam String bucketname){
+       return storageservice.getfileurl(id,cid,bucketname);
+    }
 
 }
