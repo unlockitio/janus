@@ -3,6 +3,8 @@ package org.example.s3learning.orgs;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class orgservice {
     private final orgsrep orgsrep;
@@ -26,6 +28,10 @@ public class orgservice {
     public orgsconfigentity configcreate(Long id, orgsconfigentity orgsconfigentity){
 orgsconfigentity.setorgId(id);
         return orgconfig.save(orgsconfigentity);
+    }
+
+    public List<orgsconfigentity>   orgconfiglists (long id){
+        return orgconfig.findByOrgId(id);
     }
 
 

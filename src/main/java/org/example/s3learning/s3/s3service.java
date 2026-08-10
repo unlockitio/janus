@@ -15,22 +15,23 @@ import java.util.Map;
 
 @Service
 public class s3service  {
-    private final S3Presigner  s3Presigner;
-    private final S3Client S3Client;
+   private final s3coonfig s3coonfig;
 
 
-public s3service(S3Client S3Client,S3Presigner s3Presigner){
+public s3service(s3coonfig s3coonfig) {
 
-    this.S3Client=S3Client;
-    this.s3Presigner=s3Presigner;
+    this.s3coonfig = s3coonfig;
 
 }
-    public String upload(MultipartFile file, String bucketname) throws IOException {
- S3Client.putObject(PutObjectRequest.builder().bucket(bucketname).key(file.getOriginalFilename()).build(), RequestBody.fromBytes(file.getBytes()));
+    public String upload(MultipartFile file, String bucketname,String accesskey,String secretkey) throws IOException {
+    S3Client s3 = s3coonfig.s3client(accesskey,secretkey);
+ s3.putObject(PutObjectRequest.builder().bucket(bucketname).key(file.getOriginalFilename()).build(), RequestBody.fromBytes(file.getBytes()));
        return file.getOriginalFilename();
     }
-    public Map list(String bucketname) {
-        ListObjectsV2Response response = S3Client.listObjectsV2(
+    public Map list(String bucketname, String accesskey,String secretkey) throws IOException {
+        S3Client s3 = s3coonfig.s3client(accesskey,secretkey);
+
+        ListObjectsV2Response response = s3.listObjectsV2(
 
                 ListObjectsV2Request.builder().bucket(bucketname).build());
 
@@ -38,15 +39,19 @@ public s3service(S3Client S3Client,S3Presigner s3Presigner){
        result.put("fle",response.contents());
        return result;
     }
-public void delete(String key,String bucketname){
-    S3Client.deleteObject(DeleteObjectRequest.builder().bucket(bucketname).key(key).build());
+public void delete(String key,String bucketname, String accesskey,String secretkey) throws IOException {
+    S3Client s3 = s3coonfig.s3client(accesskey,secretkey);
+
+    s3.deleteObject(DeleteObjectRequest.builder().bucket(bucketname).key(key).build());
 System.out.println("Deleted: " + key);
 }
 
-public String getfileurl(String cid,String bucketname){
-GetObjectRequest request= GetObjectRequest.builder().bucket(bucketname).key(cid).build();
+public String getfileurl(String cid,String bucketname, String accesskey,String secretkey) throws IOException {
+    S3Presigner s3 = s3coonfig.s3preassigner(accesskey,secretkey);
+
+    GetObjectRequest request= GetObjectRequest.builder().bucket(bucketname).key(cid).build();
     GetObjectPresignRequest presignRequest= GetObjectPresignRequest.builder().signatureDuration(Duration.ofMinutes(15)).getObjectRequest(request).build();
-    return s3Presigner.presignGetObject(presignRequest).url().toString();
+    return s3.presignGetObject(presignRequest).url().toString();
 }
 
 

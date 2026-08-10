@@ -12,6 +12,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.File;
 import java.io.IOException;
@@ -76,7 +77,8 @@ return donepath.toString();
             filerecordrepo.save(record);
             if (provider.equals("s3")){
                 try {
-                    String result = s3service.upload(file, services.getBucketname());
+                    String[] keys= services.getCredentials().split(",");
+                    String result = s3service.upload(file, services.getBucketname(),keys[0],keys[1]);
                     record.seturl(result);
                     record.setstatus("SUCCESS");
                     results.add(result);
@@ -87,7 +89,8 @@ return donepath.toString();
             }
             if (provider.equals("ipfs")){
                 try {
-                    String result = pinataservice.upload(file, services.getBucketname());
+                    String credentials= services.getCredentials();
+                    String result = pinataservice.upload(file, credentials);
                     record.seturl(result);
                     record.setstatus("SUCCESS");
                     results.add(result);
@@ -126,7 +129,8 @@ return donepath.toString();
 
             if (provider.equals("s3")){
                 try {
-                    String result = s3service.upload(file, childservice.getBucketname());
+                    String[] keys= childservice.getCredentials().split(",");
+                    String result = s3service.upload(file, childservice.getBucketname(),keys[0],keys[1]);
                     childRecord.seturl(result);
                     childRecord.setstatus("SUCCESS");
                     results.add("child propagation s3 "+result);
@@ -137,7 +141,8 @@ return donepath.toString();
             }
             if (provider.equals("ipfs")){
                 try {
-                    String result = pinataservice.upload(file, childservice.getBucketname());
+                    String credentials= childservice.getCredentials();
+                    String result = pinataservice.upload(file, childservice.getCredentials());
                     childRecord.seturl(result);
                     childRecord.setstatus("SUCCESS");
                     results.add("child propagation ipfs "+result);
@@ -161,33 +166,37 @@ return donepath.toString();
     }
 
     }
-    public void delete(Long id, String todeleteid){
+    public void delete(Long id, String todeleteid) throws IOException {
         for(orgsconfigentity services: orgconfig.findByOrgId(id)){
             String provider=services.getServicename();
             if (provider.equals("s3")){
-                s3service.delete(todeleteid, services.getBucketname());
+                String[] keys = services.getCredentials().split(",");
+                s3service.delete(todeleteid, services.getBucketname(),keys[0],keys[1]);
 
             }
             if(provider.equals("ipfs")){
-                pinataservice.delete(todeleteid, null);
+                String credentials= services.getCredentials();
+                pinataservice.delete(todeleteid,credentials );
             }
             if(provider.equals("kubo")){
-                kuboservice.delete(todeleteid, null);
+                kuboservice.delete(todeleteid, services.getBucketname());
             }
         }
     }
-    public List<Map> getList(Long orgId){
+    public List<Map> getList(Long orgId) throws IOException {
         List<Map> list = new ArrayList<>();
         for (orgsconfigentity services: orgconfig.findByOrgId(orgId)){
             String provider=services.getServicename();
             if (provider.equals("s3")){
-                list.add(s3service.list(services.getBucketname()));
+                String[] keys= services.getCredentials().split(",");
+                list.add(s3service.list(services.getBucketname(),keys[0],keys[1]));
             }
             if(provider.equals("ipfs")){
-                list.add(pinataservice.list(null));
+                String credentials= services.getCredentials();
+                list.add(pinataservice.list(credentials));
             }
             if (provider.equals("kubo")){
-                list.add(kuboservice.list(null));
+                list.add(kuboservice.list(services.getBucketname()));
             }
 
         }
@@ -199,7 +208,8 @@ return donepath.toString();
             String provider = services.getServicename();
             if (provider.equals("s3")) {
                 try {
-                    return s3service.getfileurl(cid, bucketname);
+                    String[] keys= services.getCredentials().split(",");
+                    return s3service.getfileurl(cid, bucketname, keys[0], keys[1]);
                 } catch (Exception e) {
 
 
@@ -213,7 +223,7 @@ return donepath.toString();
             }
             if (provider.equals("kubo")) {
                 try {
-                    return kuboservice.getfileurl(cid, null);
+                    return kuboservice.getfileurl(services.getBucketname(), cid);
                 } catch (Exception e) {
                 }
             }

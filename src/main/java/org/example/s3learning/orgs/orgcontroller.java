@@ -26,5 +26,9 @@ public class orgcontroller {
 
         return orgservice.configcreate(orgId,orgsconfigentity);
 }
+@GetMapping("/configentity/{orgId}")
+    public List<orgsconfigentity> getorgconfig(@PathVariable long orgId){
+        return orgservice.orgconfiglists(orgId);
+}
 
 }

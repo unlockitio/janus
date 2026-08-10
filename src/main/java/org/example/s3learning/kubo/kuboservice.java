@@ -13,11 +13,12 @@ import java.util.HashMap;
 import java.util.Map;
 @Service
 public class kuboservice {
-   private final WebClient kubowebclient;
-    public kuboservice(WebClient kubowebclient) {
-        this.kubowebclient = kubowebclient;
+   private final kuboconfig kuboconfig;
+    public kuboservice(kuboconfig kuboconfig) {
+        this.kuboconfig = kuboconfig;
     }
-    public String upload(MultipartFile file,String name) throws IOException {
+    public String upload(MultipartFile file,String jwt) throws IOException {
+        WebClient kuboclient= kuboconfig.kubowebclient(jwt);
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("file", new ByteArrayResource(file.getBytes()) {
                     @Override
@@ -26,17 +27,19 @@ public class kuboservice {
                     }
                 }
         );
-        return kubowebclient.post().uri("/api/v0/add").contentType(MediaType.MULTIPART_FORM_DATA).bodyValue(body).retrieve().bodyToMono(HashMap.class).map(response->(String) response.get("Hash")).block();
+        return kuboclient.post().uri("/api/v0/add").contentType(MediaType.MULTIPART_FORM_DATA).bodyValue(body).retrieve().bodyToMono(HashMap.class).map(response->(String) response.get("Hash")).block();
     }
-    public void delete(String cid,String bucketname){
-        kubowebclient.post().uri("/api/v0/pin/rm?arg="+cid).retrieve().bodyToMono(Void.class).block();
+    public void delete(String cid,String nodeaddress) throws IOException {
+        WebClient kuboclient= kuboconfig.kubowebclient(nodeaddress);
+        kuboclient.post().uri("/api/v0/pin/rm?arg="+cid).retrieve().bodyToMono(Void.class).block();
     }
-    public Map list(String bucketname){
-        return kubowebclient.post().uri("/api/v0/pin/ls").retrieve().bodyToMono(HashMap.class).block();
+    public Map list(String npdeaddress){
+        WebClient kuboclient= kuboconfig.kubowebclient(npdeaddress);
+        return kuboclient.post().uri("/api/v0/pin/ls").retrieve().bodyToMono(HashMap.class).block();
 
     }
-    public String getfileurl(String cid, String bucketname){
-        return "http://kubo:8080/ipfs/" + cid;
+    public String getfileurl(String nodeaddress,String cid){
+        return nodeaddress + cid;
     }
 
 

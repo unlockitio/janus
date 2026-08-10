@@ -23,6 +23,9 @@ public class filerecordnentity {
     public String getbackendname(){
         return service;
     }
+    public Long getorid(){
+        return orgId;
+    }
     public String getbucketname(){
         return bucketname;
     }

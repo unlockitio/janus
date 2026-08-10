@@ -18,18 +18,16 @@ import java.util.Map;
 
 @Service
 public class pinataservice  {
-    private final String jwt;
-    private final WebClient webClient;
 
-    public pinataservice(@Value("${jwt}") String jwt, WebClient webClient) {
-        this.jwt = jwt;
-        this.webClient = webClient;
+    private final pinataconfig  pinataconfig;
 
+    public pinataservice(pinataconfig pinataconfig) {
+this.pinataconfig = pinataconfig;
 
     }
 
     public String upload(MultipartFile file,String bucketname) throws IOException {
-
+WebClient pinata=pinataconfig.webClient(bucketname);
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("file", new ByteArrayResource(file.getBytes()) {
             @Override
@@ -37,10 +35,11 @@ public class pinataservice  {
                 return file.getOriginalFilename();
             }
         });
-return webClient.post().uri("/pinning/pinFileToIPFS").contentType(MediaType.MULTIPART_FORM_DATA).bodyValue(body).retrieve().bodyToMono(HashMap.class).map(response->(String) response.get("IpfsHash")).block();
+return pinata.post().uri("/pinning/pinFileToIPFS").contentType(MediaType.MULTIPART_FORM_DATA).bodyValue(body).retrieve().bodyToMono(HashMap.class).map(response->(String) response.get("IpfsHash")).block();
     }
     public void delete(String cid,String bucketname)  {
-webClient.delete().uri("/pinning/unpin/"+cid).retrieve().bodyToMono(Void.class).block();
+        WebClient pinata=pinataconfig.webClient(bucketname);
+pinata.delete().uri("/pinning/unpin/"+cid).retrieve().bodyToMono(Void.class).block();
 
     }
     public String getfileurl(String cid, String bucketname){
@@ -48,5 +47,6 @@ webClient.delete().uri("/pinning/unpin/"+cid).retrieve().bodyToMono(Void.class).
     }
 
 public Map list(String bucketname){
-    return webClient.get().uri("/data/pinList").retrieve().bodyToMono(HashMap.class).block();
+    WebClient pinata=pinataconfig.webClient(bucketname);
+    return pinata.get().uri("/data/pinList").retrieve().bodyToMono(HashMap.class).block();
 }}

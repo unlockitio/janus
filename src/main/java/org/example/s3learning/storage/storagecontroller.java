@@ -22,13 +22,13 @@ public class storagecontroller {
 
     }
     @DeleteMapping("/delete/{orgId}/{id}")
-    public String delete(@PathVariable String id, @PathVariable Long orgId)  {
+    public String delete(@PathVariable String id, @PathVariable Long orgId) throws IOException {
 
         storageservice.delete( orgId,String.valueOf(id));
         return "done deleting";
     }
     @GetMapping("/list/{orgId}")
-    public List<Map> list(@PathVariable Long orgId) {
+    public List<Map> list(@PathVariable Long orgId) throws IOException {
         return storageservice.getList(orgId);
     }
 

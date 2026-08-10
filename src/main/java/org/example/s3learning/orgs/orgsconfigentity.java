@@ -17,6 +17,8 @@ public class orgsconfigentity {
         return id;
 
     }
+    public int priority;
+
     public void setorgId(Long orgId) {
         this.orgId = orgId;
     }
@@ -34,6 +36,15 @@ public class orgsconfigentity {
     }
     public String getBucketname() {
         return bucketname;
+    }
+    public void setBucketname(String bucketname) {
+        this.bucketname = bucketname;
+    }
+    public int getPriority(){
+        return priority;
+    }
+    public void setPriority(int priority){
+        this.priority=priority;
     }
 
 }
