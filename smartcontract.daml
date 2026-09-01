@@ -1,0 +1,14 @@
+module Main where
+
+template CallerKey
+    with
+        requestId : Text
+        publicKey : Text
+        docHash : Text
+        owner : Party
+    where 
+        signatory owner
+        choice GetPublicKey : Text
+            controller owner
+            do 
+                return publicKey
